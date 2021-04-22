@@ -39,6 +39,7 @@ function stopGame() {
   hideGameButton();
   showPopupWithText('REPLAY?');
   stopGameTimer();
+  replayBtn()
 }
 
 function showStopButton() {
@@ -81,12 +82,7 @@ function updateTimerText(time) {
 function showPopupWithText(text) {
   popUpText.innerText = text;
   popUp.classList.remove('pop-up--hide');
-  popUpRefresh.addEventListener('click', () => {
-    console.log('log');
-  });
 }
-
-function restartGame() {}
 
 function initGame() {
   field.innerHTML = '';
