@@ -21,6 +21,7 @@ gameBtn.addEventListener('click', () => {
     startGame();
   }
   started = !started;
+  console.log(started);
 });
 
 function startGame() {
@@ -31,11 +32,25 @@ function startGame() {
 }
 
 function stopGame() {
-  if (time < 0) {
-    clearInterval(startTimer);
-    gameTimer.innerText = '0:0';
-    started = !started;
-  }
+  hiddenBtn();
+  replayPopup();
+  stopGameTimer();
+}
+
+function hiddenBtn() {
+  gameBtn.style.background = 'transparent';
+  gameBtn.style.border = 'none';
+}
+
+function replayPopup() {
+  const popUp = document.querySelector('.pop-up--hide');
+  popUp.style.display = 'block';
+}
+
+function stopGameTimer() {
+  timer = setInterval(() => {
+    clearInterval(timer);
+  });
 }
 
 function showStopButton() {
