@@ -1,5 +1,6 @@
 'use strict';
 
+import PopUp from './popup.js';
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 10;
 const BUG_COUNT = 10;
@@ -24,6 +25,14 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+const gameFinishBanner = new PopUp();
+// 콜백함수 : 함수 안에 인자로 함수를 전달
+// function() {return startGame()}
+// () => {startGame()} 을 setclickListener 함수에 인자로 전달
+gameFinishBanner.setClickListener(() => {
+  startGame();
+});
+
 field.addEventListener('click', onFieldClick);
 
 gameBtn.addEventListener('click', () => {
@@ -32,11 +41,6 @@ gameBtn.addEventListener('click', () => {
   } else {
     startGame();
   }
-});
-
-popUpRefresh.addEventListener('click', () => {
-  startGame();
-  hidePopUp();
 });
 
 function startGame() {
@@ -51,7 +55,7 @@ function startGame() {
 function stopGame() {
   started = false;
   hideGameButton();
-  showPopupWithText('REPLAY?');
+  gameFinishBanner.showWithText('Replay?');
   stopGameTimer();
   playSound(alertSound);
   stopSound(bgSound);
@@ -67,7 +71,7 @@ function finishGame(win) {
   }
   stopGameTimer();
   stopSound(bgSound);
-  showPopupWithText(win ? 'YOU WON' : 'YOU LOST');
+  gameFinishBanner.showWithText(win ? 'YOU WON' : 'YOU LOST');
 }
 
 function showStopButton() {
@@ -107,15 +111,6 @@ function updateTimerText(time) {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   gameTimer.innerText = `${minutes}:${seconds}`;
-}
-
-function showPopupWithText(text) {
-  popUpText.innerText = text;
-  popUp.classList.remove('pop-up--hide');
-}
-
-function hidePopUp() {
-  popUp.classList.add('pop-up--hide');
 }
 
 function initGame() {
