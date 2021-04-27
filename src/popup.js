@@ -9,7 +9,7 @@ export default class PopUp {
     // onClick()는 onClick 변수에 할당된 함수를 호출하기 위함
     this.popUpRefresh.addEventListener('click', () => {
       this.onClick && this.onClick();
-      hide();
+      this.hide();
     });
   }
 

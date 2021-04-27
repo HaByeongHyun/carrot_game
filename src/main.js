@@ -1,6 +1,7 @@
 'use strict';
 
 import PopUp from './popup.js';
+import Field from './field.js';
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 10;
 const BUG_COUNT = 10;
@@ -33,7 +34,23 @@ gameFinishBanner.setClickListener(() => {
   startGame();
 });
 
-field.addEventListener('click', onFieldClick);
+const gameField = new Field(CARROT_COUNT, BUG_COUNT);
+gameField.setClickListener(onItemClick);
+
+function onItemClick(item) {
+  if (!started) {
+    return;
+  }
+  if (item === '.carrot') {
+    score++;
+    updateScoreBoard();
+    if (score === CARROT_COUNT) {
+      finishGame(true);
+    }
+  } else if (item === '.bug') {
+    finishGame(false);
+  }
+}
 
 gameBtn.addEventListener('click', () => {
   if (started) {
@@ -115,30 +132,8 @@ function updateTimerText(time) {
 
 function initGame() {
   score = 0;
-  field.innerHTML = '';
   gameScore.innerText = CARROT_COUNT;
-  // 벌레와 당근을 생성한 뒤 field에 추가
-  addItem('carrot', CARROT_COUNT, 'img/carrot.png');
-  addItem('bug', BUG_COUNT, 'img/bug.png');
-}
-
-function onFieldClick(event) {
-  if (!started) {
-    return;
-  }
-  const target = event.target;
-  if (target.matches('.carrot')) {
-    // 당근!!
-    target.remove();
-    score++;
-    playSound(carrotSound);
-    updateScoreBoard();
-    if (score === CARROT_COUNT) {
-      finishGame(true);
-    }
-  } else if (target.matches('.bug')) {
-    finishGame(false);
-  }
+  gameField.init();
 }
 
 function playSound(sound) {
