@@ -4,6 +4,7 @@ const carrotSound = new Audio('./sound/carrot_pull.mp3');
 const CARROT_SIZE = 80;
 
 export default class Field {
+  // class 안에서 객체를 생성하고 초기화 해주는 메서드
   constructor(carrotCount, bugCount) {
     this.carrotCount = carrotCount;
     this.bugCount = bugCount;
